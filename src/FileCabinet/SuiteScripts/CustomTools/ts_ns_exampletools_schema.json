@@ -34,6 +34,21 @@
                 "idempotentHint": true,
                 "openWorldHint": false
             }
+        },
+        {
+            "name": "getRemainingUsage",
+            "description": "Get the remaining governance unit for this script.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {},
+                "required": []
+            },
+            "annotations": {
+                "title": "Get remaining governance units",
+                "readOnlyHint": true,
+                "idempotentHint": true,
+                "openWorldHint": false
+            }
         }
     ]
 }

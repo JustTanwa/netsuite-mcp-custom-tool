@@ -4,7 +4,7 @@
  * @NModuleScope Public
  */
  
-define(['N/sftp', 'N/file'], function(sftp, file) {
+define(['N/sftp', 'N/runtime'], function(sftp, runtime) {
     return {
         add: function (args) {
             let a = args["a"];
@@ -14,6 +14,7 @@ define(['N/sftp', 'N/file'], function(sftp, file) {
         ts_get_file_from_ec2: function (args) {
             const directory = args["directory"] || '/out';
             try {
+                // Can abstract into a custom record or something
                 const sftpConnection = sftp.createConnection({
                     url: 'url',
                     hostKey: 'hostKey',
@@ -25,6 +26,7 @@ define(['N/sftp', 'N/file'], function(sftp, file) {
                 const filesList = sftpConnection.list();
                 let files = filesList.filter(file => !file.directory);
                 for (let file of files) {
+                    if (runtime.getCurrentScript().getRemainingUsage() < 100) break; // quite expensive to download
                     let fileObj = sftpConnection.download({
                         directory: './',
                         filename: file.name
@@ -37,6 +39,12 @@ define(['N/sftp', 'N/file'], function(sftp, file) {
                 return JSON.stringify(error);
             }
             
+        },
+        getRemainingUsage: function (args) {
+            return JSON.stringify({
+                script: runtime.getCurrentScript(),
+                usageRemaining: runtime.getCurrentScript().getRemainingUsage()
+            })
         }
     }
 }); 
