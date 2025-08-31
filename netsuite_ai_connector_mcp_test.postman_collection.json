@@ -1,0 +1,256 @@
+{
+	"info": {
+		"_postman_id": "dc58b157-112e-4abf-adc5-79b59a0786ff",
+		"name": "netsuite_ai_connector_mcp_test",
+		"description": "This collection contains an example of a get request to login to Netsuite via OAuth 2.0 code grant flow. The resulting Access Token can then be used to make request to protected resources, like the MCP Server.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "37792927"
+	},
+	"item": [
+		{
+			"name": "Fetch Tool List",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"jsonrpc\": \"2.0\",\r\n    \"id\": \"{{$guid}}\",\r\n    \"method\": \"tools/list\",\r\n    \"params\": {}\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{SUITETALK_URL}}/services/mcp/v1/all",
+					"host": [
+						"{{SUITETALK_URL}}"
+					],
+					"path": [
+						"services",
+						"mcp",
+						"v1",
+						"all"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Call runCustomSQL Tool",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"jsonrpc\": \"2.0\",\r\n    \"id\": \"{{$guid}}\",\r\n    \"method\": \"tools/call\",\r\n    \"params\": {\r\n        \"name\": \"runCustomSuiteQL\",\r\n        \"arguments\": {\r\n            \"description\": \"Get the id and transaction number of the top 5 latest sales orders ordered by transaction date\",\r\n            \"sqlQuery\": \"SELECT TOP 5 id, tranid FROM transaction WHERE type = 'SalesOrd' ORDER BY trandate DESC\"\r\n        }\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{SUITETALK_URL}}/services/mcp/v1/all",
+					"host": [
+						"{{SUITETALK_URL}}"
+					],
+					"path": [
+						"services",
+						"mcp",
+						"v1",
+						"all"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Call getSalesOrder Tool",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"jsonrpc\": \"2.0\",\r\n    \"id\": \"{{$guid}}\",\r\n    \"method\": \"tools/call\",\r\n    \"params\": {\r\n        \"name\": \"getSalesOrder\",\r\n        \"arguments\": {\r\n            \"orderId\": \"55\"\r\n        }\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{SUITETALK_URL}}/services/mcp/v1/all",
+					"host": [
+						"{{SUITETALK_URL}}"
+					],
+					"path": [
+						"services",
+						"mcp",
+						"v1",
+						"all"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Call createCustomer",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"jsonrpc\": \"2.0\",\r\n    \"id\": \"{{$guid}}\",\r\n    \"method\": \"tools/call\",\r\n    \"params\": {\r\n        \"name\": \"createCustomer\",\r\n        \"arguments\": {\r\n            \"companyname\": \"Greenstep Oyj\",\r\n            \"isperson\": \"F\",\r\n            \"subsidiary\": \"1\"\r\n        }\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{SUITETALK_URL}}/services/mcp/v1/all",
+					"host": [
+						"{{SUITETALK_URL}}"
+					],
+					"path": [
+						"services",
+						"mcp",
+						"v1",
+						"all"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "oauth2",
+		"oauth2": [
+			{
+				"key": "accessTokenUrl",
+				"value": "{{SUITETALK_URL}}/services/rest/auth/oauth2/v1/token",
+				"type": "string"
+			},
+			{
+				"key": "authUrl",
+				"value": "https://{{ACCOUNT_ID}}.app.netsuite.com/app/login/oauth2/authorize.nl",
+				"type": "string"
+			},
+			{
+				"key": "refreshRequestParams",
+				"value": [],
+				"type": "any"
+			},
+			{
+				"key": "tokenRequestParams",
+				"value": [
+					{
+						"key": "grant_type",
+						"value": "authorization_code",
+						"enabled": true,
+						"send_as": "request_url"
+					}
+				],
+				"type": "any"
+			},
+			{
+				"key": "authRequestParams",
+				"value": [
+					{
+						"key": "response_type",
+						"value": "code",
+						"enabled": true,
+						"send_as": "request_url"
+					}
+				],
+				"type": "any"
+			},
+			{
+				"key": "tokenName",
+				"value": "Netsuite MCP Token",
+				"type": "string"
+			},
+			{
+				"key": "challengeAlgorithm",
+				"value": "S256",
+				"type": "string"
+			},
+			{
+				"key": "state",
+				"value": "{{$guid}}",
+				"type": "string"
+			},
+			{
+				"key": "scope",
+				"value": "mcp",
+				"type": "string"
+			},
+			{
+				"key": "redirect_uri",
+				"value": "{{CALL_BACK_URL}}",
+				"type": "string"
+			},
+			{
+				"key": "grant_type",
+				"value": "authorization_code_with_pkce",
+				"type": "string"
+			},
+			{
+				"key": "clientId",
+				"value": "{{CLIENT_ID}}",
+				"type": "string"
+			},
+			{
+				"key": "addTokenTo",
+				"value": "header",
+				"type": "string"
+			},
+			{
+				"key": "client_authentication",
+				"value": "header",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "ACCOUNT_ID",
+			"value": ""
+		},
+		{
+			"key": "SUITETALK_URL",
+			"value": "https://{{ACCOUNT_ID}}.suitetalk.api.netsuite.com"
+		},
+		{
+			"key": "CALL_BACK_URL",
+			"value": "https://claude.ai/api/mcp/auth_callback"
+		},
+		{
+			"key": "CLIENT_ID",
+			"value": "82f37ec8cf43b684fdd72405c89a3aac258760addff3693d00e5c6f04750cb36"
+		}
+	]
+}

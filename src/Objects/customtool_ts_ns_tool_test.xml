@@ -1,0 +1,8 @@
+<tool scriptid="customtool_ts_ns_tool_test">
+  <name>TS Example Tool</name>
+  <scriptfile>[/SuiteScripts/CustomTools/ts_ns_exampletools.js]</scriptfile>
+  <rpcschema>[/SuiteScripts/CustomTools/ts_ns_exampletools_schema.json]</rpcschema>
+  <exposeto3rdpartyagents>T</exposeto3rdpartyagents>
+</tool> 
+
+          

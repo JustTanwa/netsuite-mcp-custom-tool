@@ -1,0 +1,16 @@
+{
+	"servers": {
+		"netsuite-mcp-server": {
+			"command": "npx",
+			"args": [
+				"mcp-remote@latest",
+				"https://CHANGE_THIS_TO_YOUR_ACCOUNT_ID.suitetalk.api.netsuite.com/services/mcp/v1/all",
+				"--header",
+				"Authorization: Bearer ${ACCESS_TOKEN}",
+			],
+			"env": {
+				"ACCESS_TOKEN": "PASTE_YOUR_TOKEN_HERE"
+			}
+		}
+	}
+}

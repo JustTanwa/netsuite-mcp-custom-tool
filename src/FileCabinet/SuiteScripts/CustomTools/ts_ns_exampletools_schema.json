@@ -1,0 +1,39 @@
+{
+    "tools": [
+        {
+            "name": "add",
+            "description": "Add two numbers together",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "a": { "type": "number", "description": "First addend" },
+                    "b": { "type": "number", "description": "Second addend" }
+                },
+                "required": ["a", "b"]
+            },
+            "annotations": {
+                "title": "Add Numbers",
+                "readOnlyHint": true,
+                "idempotentHint": true,
+                "openWorldHint": false
+            }
+        },
+        {
+            "name": "ts_get_file_from_ec2",
+            "description": "Get files from an EC2 instance. If the user provides a command that they want to get files from the EC2 server, the tool will execute that command and return the results as list of files and their content.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "directory": { "type": "string", "description": "Directory to list files from" }
+                },
+                "required": []
+            },
+            "annotations": {
+                "title": "Get Files from EC2",
+                "readOnlyHint": true,
+                "idempotentHint": true,
+                "openWorldHint": false
+            }
+        }
+    ]
+}
