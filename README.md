@@ -40,7 +40,7 @@ After this, you will have Access Token which you can use to send message for lis
 
 VS Code is a populate tool for code editing, this summer Microsoft announced free Copilot (with limitation) for everyone so you will need to connect VS Code to Github so that your usage can be tracked. It also comes with MCP server so you can use Agent Mode on Copilot with the listed MCP servers you have set up. 
 
-In the folder, you will find the `.vscode/mcp.json` file which set up how the MCP server can be configured to connect to a remote MCP server like NetSuite. You will need to copy the access token you received from Postman to the `ACCESS_TOKEN` proper of the `env` section (you can't miss it, the file is small). You will also need to input your NetSuite `ACCOUNT_ID` just as you have in Postman.
+In the folder, you will find the `.vscode/mcp.json` file which set up how the MCP server can be configured to connect to a remote MCP server like NetSuite. You will need to copy the access token you received from Postman to the `ACCESS_TOKEN` proper of the `env` section (you can't miss it, the file is small). You will also need to input your NetSuite `ACCOUNT_ID` just as you have in Postman. Once you set this up, you can press `Start` to connect to the Netsuite MCP server, from there you can already start using the Copilot in Agent mode to interact with the MCP server.
 
 You'll also be using VS Code to write the Custom Tool SuiteScript files and other project files.
 
@@ -48,13 +48,17 @@ You'll also be using VS Code to write the Custom Tool SuiteScript files and othe
 
 Node.js is popular JavaScript runtime and it comes with a populate package manager called `npm`. Since VS Code native MCP server can only connect to a remote MCP server where you can set up the redirect URI, it is not possible to use it in this case due to the fact that it is currently not possible to create an integration record in Netsuite and one must piggy-back of the Claude AI's one. So, comes to rescue a Node package called `mcp-remote@latest` used to call the MCP server remotely rather than locally. 
 
-Only configuration to the `.vscode/mcp.json` is need to run the Node Pack Execute (npx) command to run that package for when MCP Server is running.
+Only configuration to the `.vscode/mcp.json` is needed, this is so that vscode can run the Node Pack Executor (npx) command to run that package mentioned above.
 
-One package you need to install is the SuiteCloud Development Framework CLI, this achieved through `npm install -g @oracle/suitecloud-cli` so the command `suitecloud` would be available for you to set up NetSuite project and deploy them.
+One package you need to install is the SuiteCloud Development Framework CLI, this achieved through `npm install -g @oracle/suitecloud-cli`, this is done so that the command `suitecloud` would be available for you to set up NetSuite project, link the NetSuite account and deploy the Custom Tool.
 
 ## List of Predefined MCP Tools
 
-Although you can list the available tools by sending a JSON-RPC 2.0 to the MCP with the method = `tools/list`, NetSuite does not return which fields are required. So I have included the link to official docs here, [List of tools](https://docs.oracle.com/en/cloud/saas/netsuite/ns-online-help/T_section_8204806632_1.html#T_subsect_8204806633_1) and additionally you can see the sample tools implementation on their github repository [MCP Sample Tools](https://github.com/oracle-samples/netsuite-suitecloud-samples/tree/main/MCP-Sample-Tools)
+Although you can list the available tools by sending a JSON-RPC 2.0 to the MCP with the method = `tools/list`, NetSuite does not return which fields are required. So I have included the link to official docs here, [List of tools](https://docs.oracle.com/en/cloud/saas/netsuite/ns-online-help/T_section_8204806632_1.html#T_subsect_8204806633_1) and additionally you can see the sample tools implementation on their github repository [MCP Sample Tools](https://github.com/oracle-samples/netsuite-suitecloud-samples/tree/main/MCP-Sample-Tools).
+
+## Custom Tool SuiteScript
+
+This script is new, it allows you to use most of standard NetSuite N modules (with exception to http, https and search) to implement some custom logic that you would like the AI client to be able to do on the user's behalf. For this example, I took the sample code from official [NetSuite Custom Tool](https://docs.oracle.com/en/cloud/saas/netsuite/ns-online-help/T_section_0724071739_1.html#T_subsect_13192014863_1) to make sure that I can get it working before playing around with creating my own functions. I wanted to test if the `N/sftp` would work so I decided that would be part of the use case I will explore, the idea was if NetSuite was connected to some SFTP (or multiple), a user could prompt AI to fetch files for them and do certain things with said files. It was quite intuitive to write those Custom Tool scripts, with the addition of having to create a schema for the functions.
 
 ## Challenges
 
@@ -62,7 +66,7 @@ Although you can list the available tools by sending a JSON-RPC 2.0 to the MCP w
 
 2. Environtment variables on the `mcp.json` file was something that I wanted to store outside of the file as a `.env` file but this file was not accessible in the `mcp.json` during launch. I tried to use property `envFile` but this was apprently only used after the MCP server has started so that you can load the content of `.env` into the MCP server environment. This means that you have to paste the access token in the `mcp.json` file, so I removed it when I pushed to github.
 
-3. Custom Tool not found was an issue that I ran into when deploying the example tools, it looks a couple hours trying to figure out why the tool wasn't visible in `tools/list` message to the MCP server even though the SDF said it was successfully deployed. Turns out the issue was a typo, I only found this by comparing MCP Sample Tools' files so glad that NetSuite shared the source files for that SuiteApp.
+3. Custom Tool not found was an issue that I ran into when deploying the example tools, it looks a couple hours trying to figure out why the tool wasn't visible in `tools/list` message to the MCP server even though the SDF said it was successfully deployed. Turns out the issue was a typo, I only found this by comparing MCP Sample Tools' files so glad that NetSuite shared the source files for that SuiteApp. To deploy tools, you need to set XML property `exposeto3rdpartyagents` to `T`, since the typo was "exposeto3rdpartyagent", the custom tool I created was never deployed.
 
 ## Credits
 
