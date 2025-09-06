@@ -49,6 +49,30 @@
                 "idempotentHint": true,
                 "openWorldHint": false
             }
+        },
+        {
+            "name": "reverseString",
+            "description": "Reverse a string input and return the reversed string.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "input": { "type": "string", "description": "The string to be reversed." }
+                },
+                "required": ["input"]
+            },
+            "outputSchema": {
+                "type": "object",
+                "properties": {
+                    "reversed": { "type": "string", "description": "The reversed string output." }
+                },
+                "required": ["reversed"]
+            },
+            "annotations": {
+                "title": "Reverse String",
+                "readOnlyHint": true,
+                "idempotentHint": true,
+                "openWorldHint": false
+            }
         }
     ]
 }

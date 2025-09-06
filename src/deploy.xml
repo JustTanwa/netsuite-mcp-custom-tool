@@ -1,14 +1,9 @@
 <deploy>
-    <configuration>
-        <path>~/AccountConfiguration/*</path>
-    </configuration>
     <files>
-        <path>~/FileCabinet/*</path>
+    <path>~/FileCabinet/SuiteScripts/CustomTools/*</path>
+    <path>~/FileCabinet/SuiteScripts/CustomTools/custom_client_script.js</path>
     </files>
     <objects>
         <path>~/Objects/*</path>
     </objects>
-    <translationimports>
-        <path>~/Translations/*</path>
-    </translationimports>
 </deploy>

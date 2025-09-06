@@ -49,13 +49,18 @@ define(['N/sftp', 'N/runtime'], function(sftp, runtime) {
                 log.error("Error connecting to EC2", error);
                 return JSON.stringify({error: "File fetching failed"});
             }
-            
         },
         getRemainingUsage: function (args) {
             return JSON.stringify({
                 script: runtime.getCurrentScript(),
                 usageRemaining: runtime.getCurrentScript().getRemainingUsage()
             })
+        },
+        reverseString: function(args) {
+            var input = args["input"] || "";
+            return {
+                reversed: input.split("").reverse().join("")
+            };
         }
     }
 }); 
