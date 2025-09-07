@@ -1,0 +1,6 @@
+<tool scriptid="customtool_ts_ns_search_tool">
+  <name>TS Search Tool</name>
+  <scriptfile>[/SuiteScripts/CustomTools/ts_ns_search_tool.js]</scriptfile>
+  <rpcschema>[/SuiteScripts/CustomTools/ts_ns_search_tool_schema.json]</rpcschema>
+  <exposeto3rdpartyagents>T</exposeto3rdpartyagents>
+</tool>

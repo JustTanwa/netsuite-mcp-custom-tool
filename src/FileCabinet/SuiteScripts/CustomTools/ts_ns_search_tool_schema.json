@@ -1,0 +1,79 @@
+{
+    "tools": [
+        {
+            "name": "ts_check_task_is_available",
+            "description": "Check if the N/task module is available and return its JSON representation.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {},
+                "required": []
+            },
+            "annotations": {
+                "title": "Check Task Module Availability",
+                "readOnlyHint": true,
+                "idempotentHint": true,
+                "openWorldHint": false
+            }
+        },
+        {
+            "name": "ts_get_file_content",
+            "description": "Get the content of a file given its NetSuite file path or file internal id",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "filePath": {
+                        "type": "string",
+                        "description": "The internal NetSuite file path (e.g., /SuiteScripts/CustomTools/yourfile.txt or 12345)."
+                    }
+                },
+                "required": ["filePath"]
+            },
+            "annotations": {
+                "title": "Get File Content",
+                "readOnlyHint": true,
+                "idempotentHint": true,
+                "openWorldHint": false
+            }
+        },
+        {
+            "name": "ts_run_saved_search_task",
+            "description": "Run a saved search as a scheduled task and save results to a CSV file in the File Cabinet. Returns the task ID, file path and initial status of the task.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "searchId": {
+                        "type": "string",
+                        "description": "The internal ID of the saved search to run."
+                    }
+                },
+                "required": ["searchId"]
+            },
+            "annotations": {
+                "title": "Run Saved Search Task",
+                "readOnlyHint": false,
+                "idempotentHint": false,
+                "openWorldHint": false
+            }
+        },
+        {
+            "name": "ts_check_task_status",
+            "description": "Check the status of a scheduled task by its task ID.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "taskId": {
+                        "type": "string",
+                        "description": "The ID of the scheduled task to check."
+                    }
+                },
+                "required": ["taskId"]
+            },
+            "annotations": {
+                "title": "Check Task Status",
+                "readOnlyHint": true,
+                "idempotentHint": true,
+                "openWorldHint": false
+            }
+        }
+    ]
+}
