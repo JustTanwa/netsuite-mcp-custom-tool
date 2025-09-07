@@ -54,6 +54,7 @@ define(['N/log', 'N/record'], function(log, record) {
 #### SuiteCloud CLI Commands
 - **Full deployment**: Use `suitecloud project:deploy` to deploy entire project
 - **Selective deployment**: Modify `deploy.xml` for targeted file deployment
+- **Object creation**: Ensure all necessary object XML files are created in the Objects directory
 - **Validation**: Use `suitecloud project:validate` before deployment when appropriate
 
 #### Deploy.xml Configuration
@@ -71,11 +72,41 @@ For selective file deployment, modify the `deploy.xml` file with this structure:
 </deploy>
 ```
 
+### Example Object XML File for SuiteScript
+```xml
+<suitelet scriptid="customscript_sdr_sl_log_user">
+  <description>Log user information when an expense report is edited. This will be called from a client script.</description>
+  <isinactive>F</isinactive>
+  <name>SuiteDreams SL Log User</name>
+  <notifyadmins>F</notifyadmins>
+  <notifyemails></notifyemails>
+  <notifyowner>T</notifyowner>
+  <notifyuser>F</notifyuser>
+  <scriptfile>[/SuiteScripts/sdr_sl_log_user.js]</scriptfile>
+  <scriptdeployments>
+    <scriptdeployment scriptid="customdeploy_sdr_sl_log_user">
+      <allemployees>F</allemployees>
+      <allpartners>F</allpartners>
+      <allroles>F</allroles>
+      <audslctrole></audslctrole>
+      <eventtype></eventtype>
+      <isdeployed>T</isdeployed>
+      <isonline>F</isonline>
+      <loglevel>DEBUG</loglevel>
+      <runasrole></runasrole>
+      <status>TESTING</status>
+      <title>SuiteDreams SL Log User</title>
+    </scriptdeployment>
+  </scriptdeployments>
+</suitelet>
+```
+
 #### Deployment Workflow
 1. **Pre-deployment**: Validate code syntax and SuiteScript compliance
 2. **Configure deployment**: Update `deploy.xml` if selective deployment is needed
-3. **Execute deployment**: Run `suitecloud project:deploy` command
-4. **Post-deployment**: Verify deployment success and log results
+3. **Object creation**: Ensure all necessary object XML files are created in the Objects directory
+4. **Execute deployment**: Run `suitecloud project:deploy` command
+5. **Post-deployment**: Verify deployment success and log results
 
 ## Operational Guidelines
 
