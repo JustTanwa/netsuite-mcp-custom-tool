@@ -68,6 +68,8 @@ This script is new, it allows you to use most of standard NetSuite N modules (wi
 
 3. Custom Tool not found was an issue that I ran into when deploying the example tools, it looks a couple hours trying to figure out why the tool wasn't visible in `tools/list` message to the MCP server even though the SDF said it was successfully deployed. Turns out the issue was a typo, I only found this by comparing MCP Sample Tools' files so glad that NetSuite shared the source files for that SuiteApp. To deploy tools, you need to set XML property `exposeto3rdpartyagents` to `T`, since the typo was "exposeto3rdpartyagent", the custom tool I created was never deployed.
 
+4. Update: I wanted to try to make those "vibe coded" application for Netsuite using AI agent and environmental set up. So first challenge was to make sure that AI could call command line tool such as "suitecloud-cli" and I ran into an issue that because I was using git-bash the PATH variable was not resolved properly for my "suitecloud-cli" and I could not get the Copilot to call python script either. So I had to switched to using PowerShell instead. With the combination of Copilot instruction file and pre-arranged scripts, I was about to test prompting creation of script using Copilot, with auto deployment and testing via RESTlet.
+
 ## Credits
 
 [awesome-netsuite-ai](https://github.com/michoelchaikin/awesome-netsuite-ai) - This is a really helpful repository containing collection of NetSuite community guides and insights with NetSuite Connect AI and Custom Tool.
