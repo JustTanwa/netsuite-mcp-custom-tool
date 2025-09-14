@@ -1,0 +1,23 @@
+<restlet scriptid="customscript_file_access_restlet">
+    <name>File Access RESTlet</name>
+    <description>RESTlet for accessing NetSuite files through web service</description>
+    <isinactive>F</isinactive>
+    <notifyadmins>F</notifyadmins>
+    <notifyemails></notifyemails>
+    <notifyowner>T</notifyowner>
+    <notifyuser>F</notifyuser>
+    <scriptfile>[/SuiteScripts/CustomTools/file_access_restlet.js]</scriptfile>
+    <scriptdeployments>
+        <scriptdeployment scriptid="customdeploy_file_access_restlet">
+            <allemployees>F</allemployees>
+            <allpartners>F</allpartners>
+            <allroles>F</allroles>
+            <audslctrole></audslctrole>
+            <isdeployed>T</isdeployed>
+            <isonline>T</isonline>
+            <loglevel>DEBUG</loglevel>
+            <status>TESTING</status>
+            <title>File Access RESTlet Deployment</title>
+        </scriptdeployment>
+    </scriptdeployments>
+</restlet>

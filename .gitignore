@@ -40,3 +40,6 @@ project.json
 
 # environment files
 .env
+
+# key files
+*.pem

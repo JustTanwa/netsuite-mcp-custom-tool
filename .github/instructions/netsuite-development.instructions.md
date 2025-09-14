@@ -108,6 +108,66 @@ For selective file deployment, modify the `deploy.xml` file with this structure:
 4. **Execute deployment**: Run `suitecloud project:deploy` command
 5. **Post-deployment**: Verify deployment success and log results
 
+## NetSuite RESTlet API Access
+
+### Using netsuite_auth.py for Authentication
+The project includes a Python authentication script (`netsuite_auth.py`) that handles OAuth2 client credentials flow for NetSuite REST API access. The user will manage the environment variables for you.
+
+#### Authentication
+1. **Get Access Token for curl Usage**:
+   ```pwsh
+   $TOKEN$= python netsuite_auth.py --token-only
+   ```
+
+#### RESTlet Endpoint Access
+NetSuite RESTlets are accessible at: `https://<ACCOUNT_ID>.restlets.api.netsuite.com`
+
+**Complete workflow example**:
+```pwsh
+# Step 1: Authenticate and set environment variables
+$TOKEN$= python netsuite_auth.py --token-only
+
+# Step 2: Make RESTlet API calls with curl
+curl -H "Authorization: Bearer $TOKEN" \
+     -H "Content-Type: application/json" \
+     -X POST \
+     -d '{"action": "getData", "recordId": "123"}' \
+     "https://$ACCOUNT_ID.restlets.api.netsuite.com/app/site/hosting/restlet.nl?script=customscript_my_restlet&deploy=customdeploy_my_restlet"
+```
+
+#### RESTlet URL Structure
+```
+https://<ACCOUNT_ID>.restlets.api.netsuite.com/app/site/hosting/restlet.nl?script=<SCRIPT_ID>&deploy=<DEPLOYMENT_ID>
+```
+
+**Parameters**:
+- `script`: Script ID of your RESTlet (e.g., `customscript_my_restlet`)
+- `deploy`: Deployment ID (e.g., `customdeploy_my_restlet`)
+
+#### Common RESTlet Operations
+```pwsh
+# GET request to RESTlet
+curl -H "Authorization: Bearer $NETSUITE_ACCESS_TOKEN" \
+     -X GET \
+     "https://$ACCOUNT_ID.restlets.api.netsuite.com/app/site/hosting/restlet.nl?script=customscript_data_handler&deploy=customdeploy_production"
+
+# POST with JSON data
+curl -H "Authorization: Bearer $NETSUITE_ACCESS_TOKEN" \
+     -H "Content-Type: application/json" \
+     -X POST \
+     -d '{"operation": "create", "data": {"name": "Test Record"}}' \
+     "https://$ACCOUNT_ID.restlets.api.netsuite.com/app/site/hosting/restlet.nl?script=customscript_data_handler&deploy=customdeploy_production"
+
+```
+
+#### Authentication Token Management
+- Use `--export` flag for shell environment variable export (e.g. NETSUITE_ACCESS_TOKEN)
+- Use `--token-only` flag when you only need the token value
+
+#### Error Handling
+- Authentication errors will be logged with detailed error messages
+- HTTP error responses from RESTlet calls should be handled appropriately
+
 ## Operational Guidelines
 
 ### File Management
@@ -137,7 +197,7 @@ For selective file deployment, modify the `deploy.xml` file with this structure:
 ## Command Reference
 
 ### Essential SuiteCloud CLI Commands
-```bash
+```pwsh
 # Deploy entire project
 suitecloud project:deploy
 
@@ -174,5 +234,7 @@ When working on tasks:
 - Validate all user inputs in SuiteScript code
 - Implement appropriate role-based permissions
 - Maintain audit trails for all deployments
+- Securely store private keys and credentials
+- Use HTTPS for all API communications
 
 Remember: You have full autonomy to edit any files in the workspace and deploy to NetSuite. Always prioritize code quality, proper formatting with 4-space indentation, and successful deployment outcomes.
