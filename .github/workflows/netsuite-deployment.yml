@@ -1,0 +1,10 @@
+name: Netsuite Deployment
+run-name: ${{ github.actor }} is running the Netsuite Deployment
+on: [push]
+jobs:
+  first-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code into runtime
+        uses: actions/checkout@v5
+      - run: echo "Job ran sussessfully"
