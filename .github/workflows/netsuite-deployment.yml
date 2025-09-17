@@ -2,9 +2,21 @@ name: Netsuite Deployment
 run-name: ${{ github.actor }} is running the Netsuite Deployment
 on: [push]
 jobs:
-  first-job:
+  netsuite-deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository code into runtime
         uses: actions/checkout@v5
-      - run: echo "Job ran sussessfully"
+      - name: Install Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: 'lts/*'
+      - name: Install Java JDK
+        uses: actions/setup-java@v5
+        with:
+          java-version: '17'
+          distribution: 'oracle'
+      - name: Install SuiteCloud CLI
+        run: npm install @oracle/suitecloud-cli --acceptsuitecloudsdklicense
+      - name: Checking Point
+        run: echo "Now you have installed everything"
