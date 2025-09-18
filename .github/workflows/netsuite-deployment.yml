@@ -18,12 +18,15 @@ jobs:
           java-version: '17'
           distribution: 'oracle'
       - name: Install SuiteCloud CLI
-        run: npm install @oracle/suitecloud-cli --acceptsuitecloudsdklicense
-      - name: Create Private Key File
+        run: npm install -g @oracle/suitecloud-cli --acceptsuitecloudsdklicense
+      - name: Create Private Key File and Setup SuiteCloud environment variables
         run: | 
           echo "${{secrets.PRIVATE_KEY}}" > /tmp/private_key.pem
           chmod 600 /tmp/private_key.pem
       - name: Setup Netsuite Credentials
-        run: suitecloud account:setup:ci --authid main_auth_id --certificateid ${{secrets.CERTIFICATE_ID}} --privatekeypath /tem/private_key.pem --accountid ${{secrets.ACCOUNT_ID}}
+        env:
+          SUITECLOUD_CL: 1
+          SUITECLOUD_CL_PASSKEY: ${{secrets.PASSKEY}}
+        run: suitecloud account:setup:ci --authid main_auth_id --certificateid ${{secrets.CERTIFICATE_ID}} --privatekeypath /tmp/private_key.pem --account ${{secrets.ACCOUNT_ID}}
       - name: Validate Project
         run: suitecloud project:validate
