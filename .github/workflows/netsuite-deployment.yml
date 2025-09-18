@@ -25,8 +25,8 @@ jobs:
           chmod 600 /tmp/private_key.pem
       - name: Setup Netsuite Credentials
         env:
-          SUITECLOUD_CL: 1
-          SUITECLOUD_CL_PASSKEY: ${{secrets.PASSKEY}}
+          SUITECLOUD_CI: 1
+          SUITECLOUD_CI_PASSKEY: ${{secrets.PASSKEY}}
         run: suitecloud account:setup:ci --authid main_auth_id --certificateid ${{secrets.CERTIFICATE_ID}} --privatekeypath /tmp/private_key.pem --account ${{secrets.ACCOUNT_ID}}
       - name: Validate Project
         run: suitecloud project:validate
