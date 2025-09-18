@@ -29,4 +29,7 @@ jobs:
           SUITECLOUD_CI_PASSKEY: ${{secrets.PASSKEY}}
         run: suitecloud account:setup:ci --authid main_auth_id --certificateid ${{secrets.CERTIFICATE_ID}} --privatekeypath /tmp/private_key.pem --account ${{secrets.ACCOUNT_ID}}
       - name: Validate Project
+        env:
+          SUITECLOUD_CI: 1
+          SUITECLOUD_CI_PASSKEY: ${{secrets.PASSKEY}}
         run: suitecloud project:validate
