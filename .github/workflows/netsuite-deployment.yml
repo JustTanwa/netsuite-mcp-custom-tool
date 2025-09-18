@@ -20,7 +20,9 @@ jobs:
       - name: Install SuiteCloud CLI
         run: npm install @oracle/suitecloud-cli --acceptsuitecloudsdklicense
       - name: Create Private Key File
-        run: echo ${{secrets.PRIVATE_KEY}} > /tmp/private_key.pem
+        run: | 
+          echo "${{secrets.PRIVATE_KEY}}" > /tmp/private_key.pem
+          chmod 600 /tmp/private_key.pem
       - name: Setup Netsuite Credentials
         run: suitecloud account:setup:ci --authid main_auth_id --certificateid ${{secrets.CERTIFICATE_ID}} --privatekeypath /tem/private_key.pem --accountid ${{secrets.ACCOUNT_ID}}
       - name: Validate Project
