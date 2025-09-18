@@ -4,6 +4,7 @@ on: [push]
 jobs:
   netsuite-deploy:
     runs-on: ubuntu-latest
+    environment: netsuite-demo
     steps:
       - name: Check out repository code into runtime
         uses: actions/checkout@v5
@@ -18,5 +19,9 @@ jobs:
           distribution: 'oracle'
       - name: Install SuiteCloud CLI
         run: npm install @oracle/suitecloud-cli --acceptsuitecloudsdklicense
-      - name: Checking Point
-        run: echo "Now you have installed everything"
+      - name: Create Private Key File
+        run: echo ${{secrets.PRIVATE_KEY}} > /tmp/private_key.pem
+      - name: Setup Netsuite Credentials
+        run: suitecloud account:setup:ci --authid main_auth_id --certificateid ${{secrets.CERTIFICATE_ID}} --privatekeypath /tem/private_key.pem --accountid ${{secrets.ACCOUNT_ID}}
+      - name: Validate Project
+        run: suitecloud project:validate
