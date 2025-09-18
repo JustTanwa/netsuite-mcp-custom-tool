@@ -33,3 +33,7 @@ jobs:
           SUITECLOUD_CI: 1
           SUITECLOUD_CI_PASSKEY: ${{secrets.PASSKEY}}
         run: suitecloud project:validate
+      - name: Deploy Project
+        env:
+          SUITECLOUD_CI: 1
+          SUITECLOUD_CI_PASSKEY: ${{secrets.PASSKEY}}
